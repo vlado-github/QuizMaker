@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.API", "QuizMaker.API\QuizMaker.API.csproj", "{81879BE0-C288-410D-96E7-0515AE3A3B28}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C030174D-7A4B-452A-A6F8-CF1B02C7F575}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Domain", "QuizMaker.Domain\QuizMaker.Domain.csproj", "{4EBCCED9-B96D-452D-8AF4-C84FBD61335C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Database", "QuizMaker.Database\QuizMaker.Database.csproj", "{FD82DB92-2FE7-44A6-97EF-E9F746EDF79E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Tests", "QuizMaker.Tests\QuizMaker.Tests.csproj", "{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{81879BE0-C288-410D-96E7-0515AE3A3B28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{81879BE0-C288-410D-96E7-0515AE3A3B28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{81879BE0-C288-410D-96E7-0515AE3A3B28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{81879BE0-C288-410D-96E7-0515AE3A3B28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EBCCED9-B96D-452D-8AF4-C84FBD61335C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EBCCED9-B96D-452D-8AF4-C84FBD61335C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EBCCED9-B96D-452D-8AF4-C84FBD61335C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EBCCED9-B96D-452D-8AF4-C84FBD61335C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD82DB92-2FE7-44A6-97EF-E9F746EDF79E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD82DB92-2FE7-44A6-97EF-E9F746EDF79E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD82DB92-2FE7-44A6-97EF-E9F746EDF79E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD82DB92-2FE7-44A6-97EF-E9F746EDF79E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

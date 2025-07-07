@@ -1,0 +1,6 @@
+﻿services:
+  quizmaker.api:
+    image: quizmaker.api
+    build:
+      context: .
+      dockerfile: QuizMaker.API/Dockerfile
