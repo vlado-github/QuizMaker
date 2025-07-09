@@ -14,15 +14,6 @@ public static class QuizMakerDomainBootstrap
         services.AddScoped<IQuizQueryDispatcher, QuizQueryDispatcher>();
         services.AddScoped<IQuizCommandHandler, QuizCommandHandler>();
         services.AddScoped<IExporterCommandHandler, ExporterCommandHandler>();
-
-        // services.AddScoped<CompositionContainer>(sp =>
-        // {
-        //     var catalog = new AggregateCatalog();
-        //     catalog.Catalogs.Add(new AssemblyCatalog(typeof(IFileExporter).Assembly));
-        //     catalog.Catalogs.Add(new DirectoryCatalog(AppContext.BaseDirectory));
-        //     var container = new CompositionContainer(catalog);
-        //     container.ComposeParts();
-        //     return container;
-        // });
+        services.AddScoped<IExporterQueryDispatcher, ExporterQueryDispatcher>();
     }
 }

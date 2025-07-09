@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
 using QuizMaker.Domain.Features.QuizBuilder;
@@ -18,16 +19,19 @@ public class QuizController : ControllerBase
     private readonly IQuizQueryDispatcher _quizQueryDispatcher;
     private readonly IQuizCommandHandler _quizCommandHandler;
     private readonly IExporterCommandHandler _exporterCommandHandler;
+    private readonly IExporterQueryDispatcher _exporterQueryDispatcher;
 
     public QuizController(ILogger<QuizController> logger, 
         IQuizQueryDispatcher quizQueryDispatcher,
         IQuizCommandHandler quizCommandHandler,
-        IExporterCommandHandler exporterCommandHandler)
+        IExporterCommandHandler exporterCommandHandler,
+        IExporterQueryDispatcher exporterQueryDispatcher)
     {
         _logger = logger;
         _quizQueryDispatcher = quizQueryDispatcher;
         _quizCommandHandler = quizCommandHandler;
         _exporterCommandHandler = exporterCommandHandler;
+        _exporterQueryDispatcher = exporterQueryDispatcher;
     }
 
     /// <summary>
@@ -94,9 +98,13 @@ public class QuizController : ControllerBase
     public async Task<FileResult> Export(ExportQuizCommand command)
     {
         var fileType = command.FileType.ToLower();
-        SupportedExportFileFormats.Formats.TryGetValue(fileType, out var fileExtension);
         var stream = await _exporterCommandHandler.Handle(command);
-        return File(stream, fileType, $"result.{fileExtension}");
+        var provider = new FileExtensionContentTypeProvider();
+        var extensions = provider.Mappings
+            .Where(kvp => kvp.Value.Equals(fileType, StringComparison.OrdinalIgnoreCase))
+            .Select(kvp => kvp.Key)
+            .ToList();
+        return File(stream, fileType, $"result.{extensions.First()}");
     }
     
     /// <summary>
@@ -106,6 +114,6 @@ public class QuizController : ControllerBase
     [HttpGet("export/supported")]
     public IList<string> Export()
     {
-        return SupportedExportFileFormats.Formats.Select(x => x.Key).ToList();
+        return _exporterQueryDispatcher.GetSupportedExportFormats();
     }
 }

@@ -7,6 +7,7 @@ namespace QuizMaker.Plugins.CsvExport;
 
 [Export(typeof(IFileExporter))]
 [ExportMetadata("Format", "text/csv")]
+[ExportMetadata("Extension", "csv")]
 public class CsvExporter : IFileExporter
 {
     public async Task<MemoryStream> ExportAsync<T>(IList<T> data) where T: class
