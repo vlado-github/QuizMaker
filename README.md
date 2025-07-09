@@ -34,7 +34,7 @@ Position to test directory (**QuizMaker/QuizMaker.Tests**) and run command:
 dotnet test
 ```
 ## Postman
-To invoke API you can import Pastman collection (**QuizMaker/Postman**). Use different environments for Local or Docker runtime:
+To invoke API you can import Postman collection (**QuizMaker/Postman**). Use different environments for Local or Docker runtime:
 1. QuizMaker - local
 2. QuizMaker - docker
 
