@@ -44,40 +44,40 @@ namespace QuizMaker.Database.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "question_quiz",
+                name: "quiz_questions",
                 columns: table => new
                 {
-                    questions_id = table.Column<long>(type: "bigint", nullable: false),
-                    quizzes_id = table.Column<long>(type: "bigint", nullable: false)
+                    quiz_id = table.Column<long>(type: "bigint", nullable: false),
+                    question_id = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_question_quiz", x => new { x.questions_id, x.quizzes_id });
+                    table.PrimaryKey("pk_quiz_questions", x => new { x.quiz_id, x.question_id });
                     table.ForeignKey(
-                        name: "fk_question_quiz_questions_questions_id",
-                        column: x => x.questions_id,
+                        name: "fk_quiz_questions_questions_question_id",
+                        column: x => x.question_id,
                         principalTable: "questions",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "fk_question_quiz_quizzes_quizzes_id",
-                        column: x => x.quizzes_id,
+                        name: "fk_quiz_questions_quizzes_quiz_id",
+                        column: x => x.quiz_id,
                         principalTable: "quizzes",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_question_quiz_quizzes_id",
-                table: "question_quiz",
-                column: "quizzes_id");
+                name: "ix_quiz_questions_question_id",
+                table: "quiz_questions",
+                column: "question_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "question_quiz");
+                name: "quiz_questions");
 
             migrationBuilder.DropTable(
                 name: "questions");

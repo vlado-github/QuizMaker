@@ -1,6 +1,8 @@
 using Bogus;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Npgsql;
+using NpgsqlTypes;
 using QuizMaker.Database;
 using QuizMaker.Database.Base;
 using QuizMaker.Database.Entities;
@@ -18,7 +20,6 @@ public class TestSeeder : IDisposable
         _memoryCache = new MemoryCache(new MemoryCacheOptions { SizeLimit = memoryCacheSize });
         _dbContext = dbContext; 
         _faker = new Faker("en");
-        InitSeed();
     }
 
     public TestSeeder Include<TEntity>(int numberOfItems = 1, string prefixText = "") where TEntity : EntityBase
@@ -29,11 +30,6 @@ public class TestSeeder : IDisposable
         }
 
         return this;
-    }
-
-    private void InitSeed()
-    {
-        Seed();
     }
 
     private void AddEntity<TEntity>(string prefixText = "") where TEntity : EntityBase
@@ -52,15 +48,17 @@ public class TestSeeder : IDisposable
         }
         else if (typeof(TEntity) == typeof(Question))
         {
-            var question = new Question()
+            foreach (var quiz in GetItems<Quiz>())
             {
-                QuestionPhrase = $"{prefixText}{_faker.Lorem.Sentence()}",
-                CorrectAnswer = _faker.Lorem.Sentence()
-            };
-            question.Quizzes.Add(GetItems<Quiz>().First());
-            _dbContext.Questions.Add(question);
-            _dbContext.SaveChanges();
-            AddCacheItem(question, question.Id);
+                var question = new Question()
+                {
+                    QuestionPhrase = $"{prefixText}{_faker.Lorem.Sentence()}",
+                    CorrectAnswer = _faker.Lorem.Sentence()
+                };
+                quiz.Questions.Add(question);
+                _dbContext.SaveChanges();
+                AddCacheItem(question, question.Id);
+            }
         }
 
         #endregion
@@ -123,10 +121,6 @@ public class TestSeeder : IDisposable
         _memoryCache.Set(typeof(TEntity).Name, listOfItems, new MemoryCacheEntryOptions().SetSize(1));
     }
 
-    public void Seed()
-    {
-    }
-
     public void Dispose()
     {
         CleanUp();
@@ -140,14 +134,24 @@ public class TestSeeder : IDisposable
 
         if (GetItems<Question>().Any())
         {
-            _dbContext.Database.ExecuteSql(
-                $"DELETE FROM questions WHERE Id IN ({string.Join(",", GetItems<Question>().Select(x => x.Id))});");
+            var ids = GetItems<Question>().Select(x => x.Id).ToList();
+            var param = new NpgsqlParameter("@ids", NpgsqlDbType.Array | NpgsqlDbType.Bigint)
+            {
+                Value = ids
+            };
+            var sql = "DELETE FROM questions WHERE id = ANY(@ids);";
+            _dbContext.Database.ExecuteSqlRaw(sql, param);
         }
 
         if (GetItems<Quiz>().Any())
         {
-            _dbContext.Database.ExecuteSql(
-                $"DELETE FROM quizzes WHERE Id IN ({string.Join(",", GetItems<Quiz>().Select(x => x.Id))});");
+            var ids = GetItems<Quiz>().Select(x => x.Id).ToList();
+            var param = new NpgsqlParameter("@ids", NpgsqlDbType.Array | NpgsqlDbType.Bigint)
+            {
+                Value = ids
+            };
+            var sql = "DELETE FROM quizzes WHERE id = ANY(@ids);";
+            _dbContext.Database.ExecuteSqlRaw(sql, param);
         }
 
         #endregion

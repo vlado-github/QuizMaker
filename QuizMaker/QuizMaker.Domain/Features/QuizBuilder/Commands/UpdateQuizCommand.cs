@@ -1,8 +1,7 @@
-using System.Collections.ObjectModel;
 using FluentValidation;
 using QuizMaker.Domain.Dtos;
 
-namespace QuizMaker.Domain.QuizFeature.Commands;
+namespace QuizMaker.Domain.Features.QuizBuilder.Commands;
 
 public record UpdateQuizCommand(
     long Id,

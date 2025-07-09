@@ -1,10 +1,11 @@
 using System.Reflection;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore;
 using QuizMaker.API.Middlewares;
 using QuizMaker.Database;
 using QuizMaker.Database.Extensions;
-using QuizMaker.Domain.Boostrap;
-using QuizMaker.Domain.QuizFeature.Commands;
+using QuizMaker.Domain.Bootstrap;
+using QuizMaker.Domain.Features.QuizBuilder.Commands;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -49,5 +50,14 @@ app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
+
+if (app.Environment.IsDevelopment())
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var db = scope.ServiceProvider.GetRequiredService<QuizMakerContext>();
+        await db.Database.MigrateAsync();
+    }
+}
 
 app.Run();

@@ -12,7 +12,7 @@ using QuizMaker.Database;
 namespace QuizMaker.Database.Migrations
 {
     [DbContext(typeof(QuizMakerContext))]
-    [Migration("20250706153442_Initial")]
+    [Migration("20250708105444_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -24,25 +24,6 @@ namespace QuizMaker.Database.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("QuestionQuiz", b =>
-                {
-                    b.Property<long>("QuestionsId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("questions_id");
-
-                    b.Property<long>("QuizzesId")
-                        .HasColumnType("bigint")
-                        .HasColumnName("quizzes_id");
-
-                    b.HasKey("QuestionsId", "QuizzesId")
-                        .HasName("pk_question_quiz");
-
-                    b.HasIndex("QuizzesId")
-                        .HasDatabaseName("ix_question_quiz_quizzes_id");
-
-                    b.ToTable("question_quiz", (string)null);
-                });
 
             modelBuilder.Entity("QuizMaker.Database.Entities.Question", b =>
                 {
@@ -106,21 +87,40 @@ namespace QuizMaker.Database.Migrations
                     b.ToTable("quizzes", (string)null);
                 });
 
-            modelBuilder.Entity("QuestionQuiz", b =>
+            modelBuilder.Entity("QuizQuestion", b =>
+                {
+                    b.Property<long>("QuizId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("quiz_id");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint")
+                        .HasColumnName("question_id");
+
+                    b.HasKey("QuizId", "QuestionId")
+                        .HasName("pk_quiz_questions");
+
+                    b.HasIndex("QuestionId")
+                        .HasDatabaseName("ix_quiz_questions_question_id");
+
+                    b.ToTable("quiz_questions", (string)null);
+                });
+
+            modelBuilder.Entity("QuizQuestion", b =>
                 {
                     b.HasOne("QuizMaker.Database.Entities.Question", null)
                         .WithMany()
-                        .HasForeignKey("QuestionsId")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_question_quiz_questions_questions_id");
+                        .HasConstraintName("fk_quiz_questions_questions_question_id");
 
                     b.HasOne("QuizMaker.Database.Entities.Quiz", null)
                         .WithMany()
-                        .HasForeignKey("QuizzesId")
+                        .HasForeignKey("QuizId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("fk_question_quiz_quizzes_quizzes_id");
+                        .HasConstraintName("fk_quiz_questions_quizzes_quiz_id");
                 });
 #pragma warning restore 612, 618
         }

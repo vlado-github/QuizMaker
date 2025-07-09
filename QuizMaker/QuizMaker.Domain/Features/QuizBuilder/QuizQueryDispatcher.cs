@@ -4,7 +4,7 @@ using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
 using QuizMaker.Domain.Exceptions;
 
-namespace QuizMaker.Domain.QuizFeature;
+namespace QuizMaker.Domain.Features.QuizBuilder;
 
 public interface IQuizQueryDispatcher
 {

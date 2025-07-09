@@ -1,7 +1,7 @@
 using FluentValidation;
 using QuizMaker.Domain.Dtos;
 
-namespace QuizMaker.Domain.QuizFeature.Commands;
+namespace QuizMaker.Domain.Features.QuizBuilder.Commands;
 
 public record CreateQuizCommand(string Name, IReadOnlyCollection<QuestionDto> Questions);
 

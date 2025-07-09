@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Mvc;
 using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
-using QuizMaker.Domain.QuizFeature;
-using QuizMaker.Domain.QuizFeature.Commands;
+using QuizMaker.Domain.Features.QuizBuilder;
+using QuizMaker.Domain.Features.QuizBuilder.Commands;
+using QuizMaker.Domain.Features.QuizExporter;
+using QuizMaker.Domain.Features.QuizExporter.Commands;
+using QuizMaker.Domain.Features.QuizExporter.Exporters;
 
 namespace QuizMaker.API.Controllers;
 
@@ -13,14 +16,17 @@ public class QuizController : ControllerBase
     private readonly ILogger<QuizController> _logger;
     private readonly IQuizQueryDispatcher _quizQueryDispatcher;
     private readonly IQuizCommandHandler _quizCommandHandler;
+    private readonly IExporterCommandHandler _exporterCommandHandler;
 
     public QuizController(ILogger<QuizController> logger, 
         IQuizQueryDispatcher quizQueryDispatcher,
-        IQuizCommandHandler quizCommandHandler)
+        IQuizCommandHandler quizCommandHandler,
+        IExporterCommandHandler exporterCommandHandler)
     {
         _logger = logger;
         _quizQueryDispatcher = quizQueryDispatcher;
         _quizCommandHandler = quizCommandHandler;
+        _exporterCommandHandler = exporterCommandHandler;
     }
 
     /// <summary>
@@ -76,5 +82,13 @@ public class QuizController : ControllerBase
     public async Task Delete([FromRoute] long quizId)
     {
         await _quizCommandHandler.Handle(new DeleteQuizCommand(quizId));
+    }
+
+    [HttpPost("export")]
+    public async Task<FileResult> Export(ExportQuizCommand command)
+    {
+        var fileType = command.FileType.ToLower();
+        var stream = await _exporterCommandHandler.Handle(command);
+        return File(stream, SupportedExportFileFormats.Formats[fileType], $"result.{fileType}");
     }
 }

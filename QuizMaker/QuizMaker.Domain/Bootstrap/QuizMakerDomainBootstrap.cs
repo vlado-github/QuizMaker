@@ -1,9 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using QuizMaker.Database;
 using QuizMaker.Domain.Base;
-using QuizMaker.Domain.QuizFeature;
+using QuizMaker.Domain.Features.QuizBuilder;
+using QuizMaker.Domain.Features.QuizExporter;
 
-namespace QuizMaker.Domain.Boostrap;
+namespace QuizMaker.Domain.Bootstrap;
 
 public static class QuizMakerDomainBootstrap
 {
@@ -12,5 +13,6 @@ public static class QuizMakerDomainBootstrap
         services.AddScoped<IUnitOfWork<QuizMakerContext>, UnitOfWork<QuizMakerContext>>();
         services.AddScoped<IQuizQueryDispatcher, QuizQueryDispatcher>();
         services.AddScoped<IQuizCommandHandler, QuizCommandHandler>();
+        services.AddScoped<IExporterCommandHandler, ExporterCommandHandler>();
     }
 }

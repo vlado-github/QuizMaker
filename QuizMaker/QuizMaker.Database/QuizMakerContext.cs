@@ -25,8 +25,17 @@ public class QuizMakerContext : CustomDbContext<QuizMakerContext>
         quiz.HasKey(x => x.Id);
         quiz.HasQueryFilter(x => !x.IsDeleted);
         quiz.Property(x => x.Name).HasMaxLength(250).IsRequired();
-        quiz.HasMany(e => e.Questions)
-            .WithMany(e => e.Quizzes);
+        quiz.HasMany(x => x.Questions)
+            .WithMany(x => x.Quizzes)
+            .UsingEntity<Dictionary<string, object>>(
+                "QuizQuestion",
+                x => x.HasOne<Question>().WithMany().HasForeignKey("QuestionId"),
+                x => x.HasOne<Quiz>().WithMany().HasForeignKey("QuizId"),
+                x =>
+                {
+                    x.HasKey("QuizId", "QuestionId");
+                    x.ToTable("quiz_questions");
+                });
 
         #endregion
         
@@ -37,8 +46,6 @@ public class QuizMakerContext : CustomDbContext<QuizMakerContext>
         question.HasQueryFilter(x => !x.IsDeleted);
         question.Property(x => x.QuestionPhrase).IsRequired();
         question.Property(x => x.CorrectAnswer).IsRequired();
-        question.HasMany(x => x.Quizzes)
-            .WithMany(q => q.Questions);
 
         #endregion
     

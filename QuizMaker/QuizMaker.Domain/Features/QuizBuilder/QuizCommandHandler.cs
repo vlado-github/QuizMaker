@@ -4,9 +4,9 @@ using QuizMaker.Database;
 using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
 using QuizMaker.Domain.Exceptions;
-using QuizMaker.Domain.QuizFeature.Commands;
+using QuizMaker.Domain.Features.QuizBuilder.Commands;
 
-namespace QuizMaker.Domain.QuizFeature;
+namespace QuizMaker.Domain.Features.QuizBuilder;
 
 public interface IQuizCommandHandler
 {
@@ -87,6 +87,7 @@ internal class QuizCommandHandler : IQuizCommandHandler
                 // case: question contained in a quiz, updated
                 existingQuestion.QuestionPhrase = commandQuestion.QuestionPhrase;
                 existingQuestion.CorrectAnswer = commandQuestion.CorrectAnswer;
+
                 addedAndUpdatedQuestions.Add(existingQuestion);
             }
             

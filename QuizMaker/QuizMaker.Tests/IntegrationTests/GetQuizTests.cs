@@ -27,7 +27,7 @@ public class GetQuizTests :  IClassFixture<IntegrationTestFixture>
         //Act
         var result = await _host.Scenario(config =>
         {
-            config.Get.Url($"/quiz/{_seeder.GetItems<Quiz>().First().Id}");
+            config.Get.Url($"/quiz/{_seeder.GetItems<Quiz>().Last().Id}");
             config.StatusCodeShouldBeOk();
         });
 

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
-using QuizMaker.Domain.QuizFeature;
+using QuizMaker.Domain.Features.QuizBuilder;
 
 namespace QuizMaker.API.Controllers;
 
