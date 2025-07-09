@@ -10,9 +10,13 @@ Once started navigate to _swagger_ documentation [http://localhost:5008/swagger/
 ## Local
 __Prerequisite__: running database container on port 5433
 
+Build MEF plugin for Csv export (**QuizMaker/QuizMaker.Plugins.CsvExport**):
+```bash
+dotnet build # <-- MEF2 file export plugin
+```
+
 Position to WebAPI directory (**QuizMaker/QuizMaker.API**) and run command:
 ```bash
-dotnet build QuizMaker.Plugins.* # <-- MEF2 file export plugin
 dotnet run
 ```
 Once started navigate to _swagger_ documentation [http://localhost:5158/swagger/index.html](http://localhost:5158/swagger/index.html).
@@ -20,9 +24,13 @@ Once started navigate to _swagger_ documentation [http://localhost:5158/swagger/
 ## Tests
 __Prerequisite__: running database container on port 5433
 
+Build MEF plugin for Csv export (**QuizMaker/QuizMaker.Plugins.CsvExport**):
+```bash
+dotnet build # <-- MEF2 file export plugin
+```
+
 Position to test directory (**QuizMaker/QuizMaker.Tests**) and run command:
 ```bash
-dotnet build QuizMaker.Plugins.* # <-- MEF2 file export plugin
 dotnet test
 ```
 

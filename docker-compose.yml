@@ -5,8 +5,10 @@
     build:
       context: .
       dockerfile: QuizMaker.API/Dockerfile
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; npm start'
     depends_on: 
-      - quizmaker.database
+      quizmaker.database:
+        condition: service_healthy
     ports:
       - "5008:8080"
     environment:
@@ -28,6 +30,11 @@
     networks:
       - quizmaker-network
     restart: unless-stopped
+    healthcheck :
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval : 5s
+      timeout : 5s
+      retries : 5
  
 networks:
   quizmaker-network:
