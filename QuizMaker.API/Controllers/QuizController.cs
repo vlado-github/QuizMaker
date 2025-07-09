@@ -3,6 +3,7 @@ using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
 using QuizMaker.Domain.Features.QuizBuilder;
 using QuizMaker.Domain.Features.QuizBuilder.Commands;
+using QuizMaker.Domain.Features.QuizBuilder.QueryResults;
 using QuizMaker.Domain.Features.QuizExporter;
 using QuizMaker.Domain.Features.QuizExporter.Commands;
 using QuizMaker.Shared;
@@ -35,7 +36,7 @@ public class QuizController : ControllerBase
     /// <param name="query"></param>
     /// <returns></returns>
     [HttpGet]
-    public async Task<IList<Quiz>> Get([FromQuery] PagedQueryParamBase query)
+    public async Task<IList<QuizSimpleResult>> Get([FromQuery] PagedQueryParamBase query)
     {
         return await _quizQueryDispatcher.GetQuizzes(query);
     }

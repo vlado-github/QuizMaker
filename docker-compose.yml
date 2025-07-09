@@ -1,0 +1,38 @@
+﻿services:
+  quizmaker.api:
+    image: quizmaker.api
+    container_name: quizmaker.api
+    build:
+      context: .
+      dockerfile: QuizMaker.API/Dockerfile
+    depends_on: 
+      - quizmaker.database
+    ports:
+      - "5008:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    networks:
+      - quizmaker-network
+        
+  quizmaker.database:
+    image: postgres
+    container_name: quizmaker.database
+    environment:
+      POSTGRES_DB: quizmaker
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - quizmaker-network
+    restart: unless-stopped
+ 
+networks:
+  quizmaker-network:
+    driver: bridge
+
+volumes:
+    postgres:
+

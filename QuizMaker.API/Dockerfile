@@ -8,6 +8,9 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["QuizMaker.API/QuizMaker.API.csproj", "QuizMaker.API/"]
+COPY ["QuizMaker.Shared/QuizMaker.Shared.csproj", "QuizMaker.Shared/"]
+COPY ["QuizMaker.Domain/QuizMaker.Domain.csproj", "QuizMaker.Domain/"]
+COPY ["QuizMaker.Database/QuizMaker.Database.csproj", "QuizMaker.Database/"]
 RUN dotnet restore "QuizMaker.API/QuizMaker.API.csproj"
 COPY . .
 WORKDIR "/src/QuizMaker.API"

@@ -1,14 +1,16 @@
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 using QuizMaker.Database;
 using QuizMaker.Database.Entities;
 using QuizMaker.Domain.Base;
 using QuizMaker.Domain.Exceptions;
+using QuizMaker.Domain.Features.QuizBuilder.QueryResults;
 
 namespace QuizMaker.Domain.Features.QuizBuilder;
 
 public interface IQuizQueryDispatcher
 {
-    Task<IList<Quiz>> GetQuizzes(PagedQueryParamBase query);
+    Task<IList<QuizSimpleResult>> GetQuizzes(PagedQueryParamBase query);
     Task<Quiz> GetQuiz(long quizId);
     Task<IList<Question>> GetQuestions(SearchPagedQueryParam query);
 }
@@ -22,11 +24,12 @@ public class QuizQueryDispatcher : IQuizQueryDispatcher
         _dbContext = dbContext;
     }
 
-    public async Task<IList<Quiz>> GetQuizzes(PagedQueryParamBase query)
+    public async Task<IList<QuizSimpleResult>> GetQuizzes(PagedQueryParamBase query)
     {
         return await _dbContext.Quizzes
             .Skip(query.Skip)
             .Take(query.Take)
+            .ProjectToType<QuizSimpleResult>()
             .ToListAsync();
     }
 

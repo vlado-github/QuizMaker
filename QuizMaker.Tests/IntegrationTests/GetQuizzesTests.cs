@@ -2,6 +2,7 @@ using System.Net;
 using Alba;
 using Microsoft.AspNetCore.Mvc;
 using QuizMaker.Database.Entities;
+using QuizMaker.Domain.Features.QuizBuilder.QueryResults;
 using QuizMaker.Tests.Base;
 
 namespace QuizMaker.Tests.IntegrationTests;
@@ -35,7 +36,7 @@ public class GetQuizzesTests :  IClassFixture<IntegrationTestFixture>
         });
 
         //Assert
-        var actualQuizzes = await result.ReadAsJsonAsync<IList<Quiz>>();
+        var actualQuizzes = await result.ReadAsJsonAsync<IList<QuizSimpleResult>>();
         foreach (var seededQuiz in _seeder.GetItems<Quiz>())
         {
             Assert.Contains(actualQuizzes, item => item.Name == seededQuiz.Name);
@@ -60,7 +61,7 @@ public class GetQuizzesTests :  IClassFixture<IntegrationTestFixture>
         });
 
         //Assert
-        var actualQuizzes = await result.ReadAsJsonAsync<IList<Quiz>>();
+        var actualQuizzes = await result.ReadAsJsonAsync<IList<QuizSimpleResult>>();
         Assert.Equal(actualQuizzes.Count, itemsPerPage);
     }
     

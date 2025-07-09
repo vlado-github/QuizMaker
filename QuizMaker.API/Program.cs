@@ -47,7 +47,7 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.EnvironmentName == "Local" || app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
@@ -62,13 +62,12 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 
-if (app.Environment.IsDevelopment())
+
+using (var scope = app.Services.CreateScope())
 {
-    using (var scope = app.Services.CreateScope())
-    {
-        var db = scope.ServiceProvider.GetRequiredService<QuizMakerContext>();
-        await db.Database.MigrateAsync();
-    }
+    var db = scope.ServiceProvider.GetRequiredService<QuizMakerContext>();
+    await db.Database.MigrateAsync();
 }
+
 
 app.Run();
