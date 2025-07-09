@@ -12,6 +12,7 @@ __Prerequisite__: running database container on port 5433
 
 Position to WebAPI directory (**QuizMaker/QuizMaker.API**) and run command:
 ```bash
+dotnet build QuizMaker.Plugins.* # <-- MEF2 file export plugin
 dotnet run
 ```
 Once started navigate to _swagger_ documentation [http://localhost:5158/swagger/index.html](http://localhost:5158/swagger/index.html).
@@ -21,6 +22,7 @@ __Prerequisite__: running database container on port 5433
 
 Position to test directory (**QuizMaker/QuizMaker.Tests**) and run command:
 ```bash
+dotnet build QuizMaker.Plugins.* # <-- MEF2 file export plugin
 dotnet test
 ```
 

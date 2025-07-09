@@ -98,4 +98,14 @@ public class QuizController : ControllerBase
         var stream = await _exporterCommandHandler.Handle(command);
         return File(stream, fileType, $"result.{fileExtension}");
     }
+    
+    /// <summary>
+    /// Supported export file formats.
+    /// </summary>
+    /// <returns></returns>
+    [HttpGet("export/supported")]
+    public IList<string> Export()
+    {
+        return SupportedExportFileFormats.Formats.Select(x => x.Key).ToList();
+    }
 }
