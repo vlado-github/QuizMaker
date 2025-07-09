@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Database", "QuizM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Tests", "QuizMaker.Tests\QuizMaker.Tests.csproj", "{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Shared", "QuizMaker.Shared\QuizMaker.Shared.csproj", "{210435A7-F1B9-40E7-9940-7241F084B40C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuizMaker.Plugins.CsvExport", "QuizMaker.Plugins.CsvExport\QuizMaker.Plugins.CsvExport.csproj", "{097B6030-BA29-4DB1-AD61-26ABF581FBD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,5 +39,13 @@ Global
 		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBDF57A6-64D5-4C44-ABB2-CBBA5B771894}.Release|Any CPU.Build.0 = Release|Any CPU
+		{210435A7-F1B9-40E7-9940-7241F084B40C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{210435A7-F1B9-40E7-9940-7241F084B40C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{210435A7-F1B9-40E7-9940-7241F084B40C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{210435A7-F1B9-40E7-9940-7241F084B40C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{097B6030-BA29-4DB1-AD61-26ABF581FBD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{097B6030-BA29-4DB1-AD61-26ABF581FBD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{097B6030-BA29-4DB1-AD61-26ABF581FBD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{097B6030-BA29-4DB1-AD61-26ABF581FBD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

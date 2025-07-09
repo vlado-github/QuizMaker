@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\QuizMaker.Shared\QuizMaker.Shared.csproj" />
+    </ItemGroup>
+
+    <Target Name="CopyToQuizMakerAPI" AfterTargets="Build">
+      <Copy
+        SourceFiles="$(TargetPath)"
+        DestinationFolder="$(SolutionDir)QuizMaker.API\bin\$(Configuration)\net8.0\"
+        SkipUnchangedFiles="true" />
+    </Target>
+
+    <Target Name="CopyToQuizMakerTests" AfterTargets="Build">
+      <Copy
+        SourceFiles="$(TargetPath)"
+        DestinationFolder="$(SolutionDir)QuizMaker.Tests\bin\$(Configuration)\net8.0\"
+        SkipUnchangedFiles="true" />
+    </Target>
+
+</Project>

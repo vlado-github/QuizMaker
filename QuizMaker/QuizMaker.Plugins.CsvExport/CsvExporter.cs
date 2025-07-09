@@ -1,12 +1,12 @@
-using System.ComponentModel.Composition;
+using System.Composition;
 using System.Reflection;
 using System.Text;
-using QuizMaker.Domain.Features.QuizExporter.Base;
+using QuizMaker.Shared.Base;
 
-namespace QuizMaker.Domain.Features.QuizExporter.Exporters;
+namespace QuizMaker.Plugins.CsvExport;
 
 [Export(typeof(IFileExporter))]
-[ExportMetadata("Format", "csv")]
+[ExportMetadata("Format", "text/csv")]
 public class CsvExporter : IFileExporter
 {
     public async Task<MemoryStream> ExportAsync<T>(IList<T> data) where T: class

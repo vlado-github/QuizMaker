@@ -17,6 +17,8 @@
         </PackageReference>
         <PackageReference Include="SharpGrip.FluentValidation.AutoValidation.Mvc" Version="1.5.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="System.Composition" Version="8.0.0" />
+        <PackageReference Include="System.Composition.Hosting" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>

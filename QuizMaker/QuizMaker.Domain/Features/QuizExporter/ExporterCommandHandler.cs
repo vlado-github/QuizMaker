@@ -1,10 +1,8 @@
-using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
+using System.Composition;
 using Microsoft.EntityFrameworkCore;
 using QuizMaker.Database;
-using QuizMaker.Domain.Features.QuizExporter.Base;
 using QuizMaker.Domain.Features.QuizExporter.Commands;
-using QuizMaker.Domain.Features.QuizExporter.Exporters;
+using QuizMaker.Shared.Base;
 
 namespace QuizMaker.Domain.Features.QuizExporter;
 
@@ -15,18 +13,16 @@ public interface IExporterCommandHandler
 
 internal class ExporterCommandHandler : IExporterCommandHandler
 {
-    [ImportMany] 
-    private IEnumerable<Lazy<IFileExporter, IFileExporterFormat>> _fileExporters;
     private readonly QuizMakerContext _dbContext;
+    private readonly IEnumerable<Lazy<IFileExporter, FileExporterFormatMetadata>> _fileExporters;
 
-    public ExporterCommandHandler(QuizMakerContext dbContext)
+    [ImportingConstructor]
+    public ExporterCommandHandler(
+        QuizMakerContext dbContext, 
+        IEnumerable<Lazy<IFileExporter, FileExporterFormatMetadata>> fileExporters)
     {
         _dbContext = dbContext;
-        
-        var catalog = new AggregateCatalog();
-        catalog.Catalogs.Add(new AssemblyCatalog(typeof(IFileExporter).Assembly));
-        var container = new CompositionContainer(catalog);
-        container.ComposeParts(this);
+        _fileExporters = fileExporters;
     }
 
     public async Task<MemoryStream> Handle(ExportQuizCommand command)

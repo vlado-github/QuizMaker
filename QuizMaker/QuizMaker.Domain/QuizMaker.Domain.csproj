@@ -8,13 +8,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\QuizMaker.Database\QuizMaker.Database.csproj" />
+      <ProjectReference Include="..\QuizMaker.Shared\QuizMaker.Shared.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="FluentValidation" Version="12.0.0" />
       <PackageReference Include="Mapster" Version="7.4.0" />
       <PackageReference Include="Mapster.EFCore" Version="5.1.1" />
-      <PackageReference Include="System.ComponentModel.Composition" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

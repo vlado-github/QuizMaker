@@ -5,7 +5,7 @@ using QuizMaker.Domain.Features.QuizBuilder;
 using QuizMaker.Domain.Features.QuizBuilder.Commands;
 using QuizMaker.Domain.Features.QuizExporter;
 using QuizMaker.Domain.Features.QuizExporter.Commands;
-using QuizMaker.Domain.Features.QuizExporter.Exporters;
+using QuizMaker.Shared;
 
 namespace QuizMaker.API.Controllers;
 
@@ -84,11 +84,17 @@ public class QuizController : ControllerBase
         await _quizCommandHandler.Handle(new DeleteQuizCommand(quizId));
     }
 
+    /// <summary>
+    /// Exports quiz questions to a file. Designated file format is required (e.g. text/csv).
+    /// </summary>
+    /// <param name="command"></param>
+    /// <returns></returns>
     [HttpPost("export")]
     public async Task<FileResult> Export(ExportQuizCommand command)
     {
         var fileType = command.FileType.ToLower();
+        SupportedExportFileFormats.Formats.TryGetValue(fileType, out var fileExtension);
         var stream = await _exporterCommandHandler.Handle(command);
-        return File(stream, SupportedExportFileFormats.Formats[fileType], $"result.{fileType}");
+        return File(stream, fileType, $"result.{fileExtension}");
     }
 }

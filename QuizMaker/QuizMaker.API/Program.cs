@@ -1,3 +1,4 @@
+using System.Composition.Hosting;
 using System.Reflection;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using QuizMaker.Database;
 using QuizMaker.Database.Extensions;
 using QuizMaker.Domain.Bootstrap;
 using QuizMaker.Domain.Features.QuizBuilder.Commands;
+using QuizMaker.Shared.Base;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,11 +21,20 @@ builder.Services.AddQuizDomain();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateQuizCommandValidator>(ServiceLifetime.Scoped, includeInternalTypes: true);
 
-//Setup database context
+// Setup database context
 builder.Services.AddDbContext<QuizMakerContext>(options =>
 {
     options.SetDbOptions();
 });
+
+// Setup MEF
+var basePath = Path.Combine(AppContext.BaseDirectory);
+var assemblies = Directory.GetFiles(basePath, "QuizMaker.Plugins.*.dll")
+    .Select(Assembly.LoadFrom)
+    .ToList();
+var configuration = new ContainerConfiguration().WithAssemblies(assemblies);
+var mefContainer = configuration.CreateContainer();
+builder.Services.AddSingleton(mefContainer.GetExports<Lazy<IFileExporter, FileExporterFormatMetadata>>());
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
