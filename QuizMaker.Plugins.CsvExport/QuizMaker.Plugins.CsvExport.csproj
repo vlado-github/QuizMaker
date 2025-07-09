@@ -11,17 +11,15 @@
     </ItemGroup>
 
     <Target Name="CopyToQuizMakerAPI" AfterTargets="Build">
-      <Copy
-        SourceFiles="$(TargetPath)"
-        DestinationFolder="$(SolutionDir)QuizMaker.API/bin/$(Configuration)/net8.0/"
-        SkipUnchangedFiles="true" />
+      <Message Text="Running CopyToQuizMakerAPI target..." Importance="high" />
+      <Message Text="Source: $(TargetPath) $(SolutionDir)" Importance="high" />
+      <Copy SourceFiles="$(TargetPath)" DestinationFolder="../QuizMaker.API/bin/$(Configuration)/net8.0/" SkipUnchangedFiles="true" />
     </Target>
 
     <Target Name="CopyToQuizMakerTests" AfterTargets="Build">
-      <Copy
-        SourceFiles="$(TargetPath)"
-        DestinationFolder="$(SolutionDir)QuizMaker.Tests/bin/$(Configuration)/net8.0/"
-        SkipUnchangedFiles="true" />
+      <Message Text="Running CopyToQuizMakerAPI target..." Importance="high" />
+      <Message Text="Source: $(TargetPath) $(SolutionDir)" Importance="high" />
+      <Copy SourceFiles="$(TargetPath)" DestinationFolder="../QuizMaker.Tests/bin/$(Configuration)/net8.0/" SkipUnchangedFiles="true" />
     </Target>
 
 </Project>
